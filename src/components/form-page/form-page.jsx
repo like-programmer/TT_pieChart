@@ -3,12 +3,16 @@ import PageHeader from '../page-header/page-header.jsx';
 import Form from '../form/form.jsx';
 
 
-const FormPage = () => {
+const FormPage = (props) => {
+    const {data} = props;
+
     return (
         <Fragment>
             <PageHeader/>
 
-            <Form/>
+            <Form
+            data={data}
+            />
         </Fragment>
     );
 };
