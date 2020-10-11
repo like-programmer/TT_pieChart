@@ -1,41 +1,46 @@
 import React, {Fragment} from "react";
+import {connect} from "react-redux";
+import {ActionCreator} from "../../reducer.js";
 import PageHeader from '../page-header/page-header.jsx';
+import {getTotalAmount, getNumbersInPersent, getOffset} from '../../utils.js';
 
 const GraphPage = (props) => {
+    const {
+        userData,
+        activePage,
+        hoveredGraphArea,
+        onActivePageChange,
+        setHoveredArea,
+    } = props;
 
-    const usersData = props.data;
+    const totalAmount = getTotalAmount(userData);
+    const numbersInPersent = getNumbersInPersent(userData);
+    const hoveredPartInPersent = (hoveredGraphArea.amount / totalAmount * 100).toFixed(2);
 
     return (
         <Fragment>
-            <PageHeader/>
+            <PageHeader
+                activePage={activePage}
+                onActivePageChange={onActivePageChange}
+            />
 
             <div className="page-wrapper">
                 <div className="chart-container">
                     <div className="legend">
                         <div
                             className="legend__color"
-                            style={{backgroundColor: `#a2c6e0`}}
+                            style={{backgroundColor: hoveredGraphArea.color}}
                         />
-                        <p className="legend__title">Title</p>
+                        {Object.values(hoveredGraphArea).length !== 0 ?
+                            <p className="legend__title">{`${hoveredGraphArea.title}, ${hoveredGraphArea.amount} - ${hoveredPartInPersent}%`}</p>
+                            : ``}
                     </div>
 
                     <svg className="chart" width="400" height="400" viewBox="0 0 50 50">
 
-                        {usersData.map((data, i) => {
-                            const index = i;
+                        {userData.map((data, i) => {
 
-                            const reducer = (accumulator, currentValue) => accumulator + currentValue;
-                            const totalAmount = (usersData.map((item) => parseInt(item.amount, 10))).reduce(reducer);
-                            const amountValues = usersData.map((item) => (item.amount / totalAmount * 100).toFixed(2));
-
-                            const offset = (amountValues.map((value, i) => {
-                                let papa = 0;
-
-                                if (i < index) {
-                                    papa += parseFloat(value);
-                                }
-                                return papa;
-                            })).reduce(reducer);
+                            const offset = getOffset(userData, i);
 
                             return (
                                 <circle
@@ -46,10 +51,11 @@ const GraphPage = (props) => {
                                     cy="50%"
                                     style={{
                                         stroke: data.color,
-                                        strokeDasharray: `${amountValues[i]} 100`,
+                                        strokeDasharray: `${numbersInPersent[i]} 100`,
                                         strokeDashoffset: (offset === 0 ? `0` : `-${offset}`)
                                     }}
-
+                                    onMouseEnter={() => setHoveredArea(data)}
+                                    onMouseLeave={() => setHoveredArea({})}
                                 />
                             )
                         })}
@@ -60,5 +66,24 @@ const GraphPage = (props) => {
     );
 };
 
+const mapStateToProps = (state) => ({
+    userData: state.userData,
+    activePage: state.activePage,
+    hoveredGraphArea: state.hoveredGraphArea,
+});
 
-export default GraphPage;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onActivePageChange(pageName) {
+            dispatch(ActionCreator.changeActivePage(pageName));
+        },
+
+        setHoveredArea(data) {
+            dispatch(ActionCreator.setHoveredArea(data));
+        }
+    };
+};
+
+
+export {GraphPage};
+export default connect(mapStateToProps, mapDispatchToProps)(GraphPage);

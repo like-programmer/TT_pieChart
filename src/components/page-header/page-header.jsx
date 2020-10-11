@@ -3,15 +3,22 @@ import NavBtn from '../nav-btn/nav-btn.jsx';
 import {PageNames} from '../../const.js';
 
 
-const PageHeader = () => {
+const PageHeader = (props) => {
+    const {
+        activePage,
+        onActivePageChange,
+    } = props;
+
     return (
         <header className="page-header">
 
-            {Object.values(PageNames).map((name, i) => {
+            {Object.entries(PageNames).map((pair, i) => {
                 return (
                     <NavBtn
-                    key={`${name}-${i}`}
-                    title={name}
+                    key={`${i}-${pair[0]}`}
+                    title={pair[1]}
+                    isActive={activePage === pair[1]}
+                    onActivePageChange={onActivePageChange}
                     />
                 )
             })}

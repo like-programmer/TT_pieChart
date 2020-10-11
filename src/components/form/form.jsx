@@ -3,23 +3,39 @@ import FormSection from '../form-section/form-section.jsx';
 
 
 const Form = (props) => {
-    const usersData = props.data;
+    const {
+        userData,
+        onAddRowBtnClick,
+        onDeleteRowBtnClick,
+        onClearRowBtnClick,
+    } = props;
+
+    // console.log(userData);
 
     return (
         <div className="page-wrapper">
             <form action="" className="form">
 
-                {usersData.map((item, i) => {
+                {userData.map((item, i) => {
                     return (
                         <FormSection
-                        key={`${item.title}-${item.amount}-${i}`}
+                        key={`${i}-${item.title}-${item.amount}`}
                         data={item}
                         isFirst={i === 0}
+                        onDeleteRowBtnClick={onDeleteRowBtnClick}
+                        onClearRowBtnClick={onClearRowBtnClick}
                         />
                     )
                 })}
 
-                <button type="button" className="btn-add">+ Add row</button>
+                <button type="button" className="btn-add"
+                onClick={(evt) => {
+                    evt.preventDefault();
+                    onAddRowBtnClick();
+                }}
+                >
+                    + Add row
+                </button>
 
             </form>
         </div>
