@@ -42,7 +42,6 @@ const PieChart = (props) => {
                     }
 
                     const avgAngle = (startAngle + endAngle) / 2;
-                    console.log(startAngle, endAngle, avgAngle);
 
                     const textX = (SectorSettings.CENTER_X + (TEXT_OFFSET + (ChartSettings.RADIUS * 1.3)) * Math.cos(degToRad(avgAngle)));
                     const textY = (SectorSettings.CENTER_Y + (TEXT_OFFSET + (ChartSettings.RADIUS * 1.3)) * Math.sin(degToRad(avgAngle)));
@@ -69,7 +68,6 @@ const PieChart = (props) => {
                                 }}
                             />
 
-                            {i !== 0 &&
                             <line
                                 key={`pie-${i}-${data.title}-${data.amount}`}
                                 x1={lineX1}
@@ -77,14 +75,13 @@ const PieChart = (props) => {
                                 x2={lineX2}
                                 y2={lineY2}
                             />
-                            }
 
                             <text textAnchor="middle"
                                   key={`pie-${i}-${data.title}`}
                                   x={textX}
                                   y={textY}
                             >
-                                {`${data.title}, ${data.amount} - ${numbersInPersent[i]}%`}
+                                {`${data.title}, ${data.amount} - ${parseInt(numbersInPersent[i], 10)}%`}
                             </text>
 
                         </Fragment>

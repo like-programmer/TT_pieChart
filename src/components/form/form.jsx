@@ -1,6 +1,10 @@
 import React from "react";
 import FormSection from '../form-section/form-section.jsx';
 
+import withFormSection from "../../hocs/with-form-section/with-form-section.js";
+
+const FormSectionWrapped = withFormSection(FormSection);
+
 
 const Form = (props) => {
     const {
@@ -18,8 +22,8 @@ const Form = (props) => {
 
                 {userData.map((item, i) => {
                     return (
-                        <FormSection
-                        key={`${i}-${item.title}-${item.amount}`}
+                        <FormSectionWrapped
+                        key={`section-${i}-${item.title}-${item.amount}`}
                         data={item}
                         isFirst={i === 0}
                         onDeleteRowBtnClick={onDeleteRowBtnClick}

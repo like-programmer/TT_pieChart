@@ -10,7 +10,7 @@ const DonutChart = (props) => {
 
     const totalAmount = getTotalAmount(userData);
     const numbersInPersent = getNumbersInPersent(userData);
-    const hoveredPartInPersent = (hoveredGraphArea.amount / totalAmount * 100).toFixed(2);
+    const hoveredPartInPersent = parseInt((hoveredGraphArea.amount / totalAmount * 100), 10);
 
     return (
         <div className="donut-chart">

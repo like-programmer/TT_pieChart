@@ -16,6 +16,7 @@ const initialState = {
 
 const ActionType = {
     ADD_TABLE_ROW: `ADD_TABLE_ROW`,
+    UPDATE_TABLE_ROW: `UPDATE_TABLE_ROW`,
     CLEAR_TABLE_ROW: `CLEAR_TABLE_ROW`,
     DELETE_TABLE_ROW: `DELETE_TABLE_ROW`,
     SET_HOVERED_AREA: `SET_HOVERED_AREA`,
@@ -31,6 +32,11 @@ const ActionCreator = {
             amount: ``,
             color: `rgb(${Math.random() * (255 - 1) + 1}, ${Math.random() * (255 - 1) + 1}, ${Math.random() * (255 - 1) + 1})`,
         },
+    }),
+
+    updateTableRow: (newData) => ({
+        type: ActionType.UPDATE_TABLE_ROW,
+        payload: newData,
     }),
 
     clearTableRow: (data) => ({
@@ -63,6 +69,20 @@ const reducer = (state = initialState, action) => {
 
             return extend(state, {
                 userData: extendedTable,
+            });
+
+        case ActionType.UPDATE_TABLE_ROW:
+            const indexes = state.userData.map((item, i) => item.id === action.payload.id ? i : null);
+            const [currentIndex] = indexes.filter((index) => index !== null);
+
+            const updatedData = [].concat(state.userData.slice(0, currentIndex), action.payload, state.userData.slice(currentIndex + 1));
+
+            console.log(currentIndex);
+            console.log(action.payload);
+            console.log(updatedData);
+
+            return extend(state, {
+                userData: updatedData,
             });
 
         case ActionType.CLEAR_TABLE_ROW:

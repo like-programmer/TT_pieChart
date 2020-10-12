@@ -1,6 +1,4 @@
 import React from "react";
-import Input from "../input/input.jsx";
-
 
 const FormSection = (props) => {
     const {
@@ -8,22 +6,31 @@ const FormSection = (props) => {
         isFirst,
         onDeleteRowBtnClick,
         onClearRowBtnClick,
+
+        title,
+        amount,
+        onTitleChange,
+        onAmountChange,
     } = props;
 
     return (
         <div className="form__section">
 
-            {Object.entries(data).map((pair, i) => {
-                if (pair[0] !== `color` && pair[0] !== `id`) {
-                    return (
-                        <Input
-                        key={`${i}-${pair[0]}-${pair[1]}`}
-                        data={pair}
-                        />
-                    );
-                }
-                return (``);
-            })}
+            <div className="input-container">
+                <label className="input-container__label">Title</label>
+                <input type="text" className="input-container__input"
+                       value={title}
+                       onChange={onTitleChange}
+                />
+            </div>
+
+            <div className="input-container">
+                <label className="input-container__label">Amount</label>
+                <input type="text" className="input-container__input"
+                       value={amount}
+                       onChange={onAmountChange}
+                />
+            </div>
 
             <button type="button" className="btn-clear"
                     onClick={(evt) => {
