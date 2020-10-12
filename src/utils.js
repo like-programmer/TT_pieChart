@@ -12,7 +12,7 @@ export const getTotalAmount =  (data) => {
 
 export const getNumbersInPersent =  (data) => {
     const totalAmount = getTotalAmount(data);
-    return data.map((item) => (item.amount / totalAmount * 100).toFixed(2))
+    return data.map((item) => parseFloat((item.amount / totalAmount * 100).toFixed(2)));
 };
 
 export const getOffset = (data, index) => {

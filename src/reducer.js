@@ -1,9 +1,15 @@
 import {extend} from "./utils.js";
 import {PageNames} from "./const.js";
-import UserData from "./mocks/userData.js";
 
 const initialState = {
-    userData: UserData,
+    userData: [
+        {
+            id: Math.random(),
+            title: ``,
+            amount: ``,
+            color: `rgb(${Math.random() * (255 - 1) + 1}, ${Math.random() * (255 - 1) + 1}, ${Math.random() * (255 - 1) + 1})`,
+        },
+    ],
     hoveredGraphArea: {},
     activePage: PageNames.FORM,
 };
@@ -23,7 +29,6 @@ const ActionCreator = {
             id: Math.random(),
             title: ``,
             amount: ``,
-            // amount: `${Math.random() * (30 - 2) + 2}`,
             color: `rgb(${Math.random() * (255 - 1) + 1}, ${Math.random() * (255 - 1) + 1}, ${Math.random() * (255 - 1) + 1})`,
         },
     }),

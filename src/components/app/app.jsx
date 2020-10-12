@@ -2,7 +2,7 @@ import React, {PureComponent} from "react";
 import {Switch, Route, BrowserRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import FormPage from '../form-page/form-page.jsx';
-import GraphPage from '../graph-page/graph-page.jsx';
+import GraphPage from '../chart-page/chart-page.jsx';
 
 import {PageNames} from "../../const.js";
 
@@ -31,7 +31,7 @@ class App extends PureComponent {
                     <Route exact path="/">
                         {this._renderPage()}
                     </Route>
-                    <Route exact path="/graph">
+                    <Route exact path="/chart">
                         <GraphPage/>
                     </Route>
                 </Switch>
